@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+import asyncio
+import configparser
+import sys
+from kirigami.connection import Remote
+
+config = configparser.ConfigParser()
+config.read('.kirigami.conf')
+
+settings = config['MAIN']
+
+r = Remote(settings, identity)
+
+
+@asyncio.coroutine
+def main():
+    while True:
+        actions = r.pending_actions()
+        if actions:
+            for action in actions:
+                controller(action)()
+
+
+def controller(event):
+    return {
+        'AuthenticationRequested': auth_handler,
+        'UserMessages': message_handler
+    }.get(event, bug_handler)
+
+def authHandler():
+    pass
+
+def messageHandler():
+    pass
+
+def bugHandler():
+    print("Received an message not implemented. Contact DC15")
+
+loop = asyncio.get_event_loop()
+try:
+	loop.forever_run()
+except KeyboardInterrupt:
+	print("Exiting...")
+	sys.exit(2)
