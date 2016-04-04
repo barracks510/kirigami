@@ -34,11 +34,14 @@ class Remote(object):
     __proto = "http"
     __user = None
 
-    def __init__(self, settings):
+    __identity = None
+
+    def __init__(self, settings, identity):
         """
         Initialize a Remote instance with a settings dictionary
 
         :param settings: a dictonary of settings
+        :param identiy: a 3-ple of identiy strings.
         """
         self.__hostname = settings["hostname"]
         self.__port = settings["port"]
@@ -49,10 +52,11 @@ class Remote(object):
         self.__connection = xmlrpc.client.ServerProxy(target)
 
         self.__user = settings["user"]
+        self.__identity = identity
 
     def ping(self):
         return self.__connection.client.ping()
 
     def pending_actions(self):
-        actions = self.__connection.client.getPendingActions(*params)
+        actions = self.__connection.client.getPendingActions(*self.__identity)
         return actions
