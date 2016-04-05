@@ -20,6 +20,7 @@
 
 import xmlrpc.client
 
+
 class Remote(object):
     """
     A Remote instance represents a connection to a remote PaperCut Server.
@@ -48,7 +49,7 @@ class Remote(object):
         self.__port = settings["port"]
         self.__proto = settings["proto"]
 
-        args = (self.__proto , self.__hostname, self.__port)
+        args = (self.__proto, self.__hostname, self.__port)
         target = "{}://{}:{}/rpc/clients/xmlrpc".format(*args)
         self.__connection = xmlrpc.client.ServerProxy(target)
 

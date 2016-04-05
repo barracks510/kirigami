@@ -28,8 +28,8 @@ import kirigami.tagger
 from kirigami.connection import Remote
 
 log = {
-    'format' : '%(asctime)s - %(levelname)s %(message)s',
-    'level' : logging.INFO
+    'format': '%(asctime)s - %(levelname)s %(message)s',
+    'level': logging.INFO
 }
 logging.basicConfig(**log)
 
@@ -88,9 +88,9 @@ def bug_handler():
 
 #loop = asyncio.get_event_loop()
 try:
-#    loop.run_forever()
+    #    loop.run_forever()
     main()
 except KeyboardInterrupt:
     print("Exiting...")
 #    loop.stop()
-#loop.close()
+# loop.close()

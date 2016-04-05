@@ -22,6 +22,7 @@ import netifaces
 import socket
 import getpass
 
+
 def identity():
     user = getpass.getuser()
     hostname = socket.gethostname()
@@ -38,7 +39,8 @@ def identity():
         except KeyError:
             pass
     ip = ','.join(ipaddrs)
-    return (user, hostname,ip)
+    return (user, hostname, ip)
+
 
 def retrieve_user():
     user = input("Username: ")
