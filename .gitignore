@@ -78,3 +78,5 @@ Session.vim
 .netrwhist
 *~
 
+# ---> Configuration
+.kirigami.conf

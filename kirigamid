@@ -3,22 +3,38 @@
 import asyncio
 import configparser
 import sys
+import logging
+
+import kirigami.tagger
 from kirigami.connection import Remote
 
+log = {
+    'format' : '%(asctime)s - %(levelname)s %(message)s',
+    'level' : logging.INFO
+}
+logging.basicConfig(**log)
+
+logging.info("Parsing Configuration from .kirigami.conf")
 config = configparser.ConfigParser()
 config.read('.kirigami.conf')
 
 settings = config['MAIN']
 
+identity = kirigami.tagger.identity()
+logging.debug("Identity tagged as %s", identity)
+
 r = Remote(settings, identity)
 
 
-@asyncio.coroutine
+#@asyncio.coroutine
 def main():
     while True:
+        logging.info("Getting Actions from Remote.")
         actions = r.pending_actions()
+
         if actions:
             for action in actions:
+                logging.info("Recieved Action %s", action)
                 controller(action)()
 
 
@@ -28,18 +44,23 @@ def controller(event):
         'UserMessages': message_handler
     }.get(event, bug_handler)
 
-def authHandler():
+
+def auth_handler():
     pass
 
-def messageHandler():
+
+def message_handler():
     pass
 
-def bugHandler():
+
+def bug_handler():
     print("Received an message not implemented. Contact DC15")
 
-loop = asyncio.get_event_loop()
+#loop = asyncio.get_event_loop()
 try:
-	loop.forever_run()
+#    loop.run_forever()
+    main()
 except KeyboardInterrupt:
-	print("Exiting...")
-	sys.exit(2)
+    print("Exiting...")
+#    loop.stop()
+#loop.close()
