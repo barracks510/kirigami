@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 #
 # Copyright (c) 2016 Dennis Chen
 # Copyright (c) 2016 Vijay Pillai
@@ -86,11 +85,12 @@ def expiration_handler():
 def bug_handler():
     logging.critical("Received a message not implemented.")
 
-#loop = asyncio.get_event_loop()
-try:
-    #    loop.run_forever()
-    main()
-except KeyboardInterrupt:
-    print("Exiting...")
-#    loop.stop()
-# loop.close()
+def cli():
+    #loop = asyncio.get_event_loop()
+    try:
+        #    loop.run_forever()
+        main()
+    except KeyboardInterrupt:
+        print("Exiting...")
+    #    loop.stop()
+    # loop.close()
