@@ -1,5 +1,6 @@
 #
 # Copyright (c) 2016 Dennis Chen
+# Copyright (c) 2016 Vijay Pillai
 #
 # This file is part of Kirigami
 #
@@ -18,6 +19,7 @@
 #
 
 import xmlrpc.client
+
 
 class Remote(object):
     """
@@ -47,7 +49,7 @@ class Remote(object):
         self.__port = settings["port"]
         self.__proto = settings["proto"]
 
-        args = (self.__proto , self.__hostname, self.__port)
+        args = (self.__proto, self.__hostname, self.__port)
         target = "{}://{}:{}/rpc/clients/xmlrpc".format(*args)
         self.__connection = xmlrpc.client.ServerProxy(target)
 
@@ -60,3 +62,13 @@ class Remote(object):
     def pending_actions(self):
         actions = self.__connection.client.getPendingActions(*self.__identity)
         return actions
+
+    def auth_user(self, userparams):
+        args = list(self.__identity)
+        for value in userparams:
+            args.append(value)
+        auth = self.__connection.client.authenticateUser(*args)
+
+    def user_messages(self):
+        msg = self.__connection.client.getUserMessages(*self.__identity)
+        return msg
