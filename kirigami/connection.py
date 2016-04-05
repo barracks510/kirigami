@@ -1,5 +1,6 @@
 #
 # Copyright (c) 2016 Dennis Chen
+# Copyright (c) 2016 Vijay Pillai
 #
 # This file is part of Kirigami
 #

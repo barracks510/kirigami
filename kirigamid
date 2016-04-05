@@ -1,4 +1,23 @@
 #!/usr/bin/env python3
+#
+# Copyright (c) 2016 Dennis Chen
+# Copyright (c) 2016 Vijay Pillai
+#
+# This file is part of Kirigami
+#
+# Kirigami is free software: you can redistribute it and/or modify it under the
+# terms of the GNU Affero General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# Kirigami is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+# details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Kirigami.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 import asyncio
 import configparser
@@ -29,12 +48,12 @@ r = Remote(settings, identity)
 #@asyncio.coroutine
 def main():
     while True:
-        logging.info("Getting Actions from Remote.")
+        logging.debug("Getting Actions from Remote.")
         actions = r.pending_actions()
 
         if actions:
             for action in actions:
-                logging.info("Recieved Action %s", action)
+                logging.debug("Recieved Action %s", action)
                 controller(action)()
 
 
@@ -57,7 +76,7 @@ def auth_handler():
 def message_handler():
     messages = r.user_messages()
     for msg in messages:
-        logging.info("Server Says: %s", msg)
+        logging.debug("Server Says: %s", msg)
 
 
 def expiration_handler():
@@ -65,7 +84,7 @@ def expiration_handler():
 
 
 def bug_handler():
-    print("Received an message not implemented. Contact DC15")
+    logging.critical("Received a message not implemented.")
 
 #loop = asyncio.get_event_loop()
 try:
