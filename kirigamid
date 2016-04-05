@@ -41,16 +41,27 @@ def main():
 def controller(event):
     return {
         'AuthenticationRequested': auth_handler,
-        'UserMessages': message_handler
+        'UserMessages': message_handler,
+        'AuthenticationExpired': expiration_handler
     }.get(event, bug_handler)
 
 
 def auth_handler():
-    pass
+    ttl = int(settings.get('ttl', '60'))
+    user = kirigami.tagger.retrieve_user()
+    args = list(user)
+    args.append(ttl)
+    r.auth_user(args)
 
 
 def message_handler():
-    pass
+    messages = r.user_messages()
+    for msg in messages:
+        logging.info("Server Says: %s", msg)
+
+
+def expiration_handler():
+    logging.info("Password Timeout")
 
 
 def bug_handler():

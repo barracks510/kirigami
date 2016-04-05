@@ -60,3 +60,13 @@ class Remote(object):
     def pending_actions(self):
         actions = self.__connection.client.getPendingActions(*self.__identity)
         return actions
+
+    def auth_user(self, userparams):
+        args = list(self.__identity)
+        for value in userparams:
+            args.append(value)
+        auth = self.__connection.client.authenticateUser(*args)
+
+    def user_messages(self):
+        msg = self.__connection.client.getUserMessages(*self.__identity)
+        return msg

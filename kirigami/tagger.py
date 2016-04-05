@@ -20,3 +20,7 @@ def identity():
     ip = ','.join(ipaddrs)
     return (user, hostname,ip)
 
+def retrieve_user():
+    user = input("Username: ")
+    password = getpass.getpass()
+    return (user, password)
