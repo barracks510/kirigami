@@ -19,29 +19,26 @@
 #
 
 import asyncio
-import configparser
-import sys
 import logging
+import sys
 
 import kirigami.tagger
+import kirigami.settings
 from kirigami.connection import Remote
 
 log = {
     'format': '%(asctime)s - %(levelname)s %(message)s',
-    'level': logging.INFO
+    'level': logging.DEBUG
 }
 logging.basicConfig(**log)
 
 logging.info("Parsing Configuration from .kirigami.conf")
-config = configparser.ConfigParser()
-config.read('.kirigami.conf')
-
-settings = config['MAIN']
+settings = kirigami.settings.parse_config('.kirigami.conf', logging)
 
 identity = kirigami.tagger.identity()
 logging.debug("Identity tagged as %s", identity)
 
-r = Remote(settings, identity)
+r = Remote(settings['main'], identity)
 
 
 #@asyncio.coroutine
