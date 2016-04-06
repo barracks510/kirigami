@@ -3,6 +3,7 @@ import os
 from setuptools import setup, find_packages
 from kirigami.version import VERSION
 
+
 def readme():
     with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as f:
         return f.read()

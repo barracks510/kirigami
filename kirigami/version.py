@@ -18,4 +18,4 @@
 # along with Kirigami.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-VERSION='0.0.0'
+VERSION = '0.0.0'
