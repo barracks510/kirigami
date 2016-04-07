@@ -42,3 +42,19 @@ def parse_config(location, logger):
     settings['main'] = values
 
     return settings
+
+
+def write_config():
+    config = configparser.RawConfigParser()
+
+    username = getpass.getuser()
+
+    config.add_section('MAIN')
+    config.set('MAIN', 'user', username)
+    config.set('MAIN', 'hostname', 'gutenberg.simons-rock.edu')
+    config.set('MAIN', 'proto', 'http')
+    config.set('MAIN', 'port', '9191')
+    config.set('MAIN', 'ttl', '60')
+
+    with open('.kirigami.conf', 'w') as configfile:
+        config.write(configfile)

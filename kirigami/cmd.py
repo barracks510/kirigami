@@ -26,6 +26,7 @@ import kirigami.tagger
 import kirigami.settings
 from kirigami.connection import Remote
 
+
 log = {
     'format': '%(asctime)s - %(levelname)s %(message)s',
     'level': logging.DEBUG
