@@ -26,6 +26,7 @@ import kirigami.tagger
 import kirigami.settings
 from kirigami.connection import Remote
 
+
 log = {
     'format': '%(asctime)s - %(levelname)s %(message)s',
     'level': logging.DEBUG
@@ -57,7 +58,8 @@ def controller(event):
     return {
         'AuthenticationRequested': auth_handler,
         'UserMessages': message_handler,
-        'AuthenticationExpired': expiration_handler
+        'AuthenticationExpired': expiration_handler,
+        'BalanceUpdate': balance_handler
     }.get(event, bug_handler)
 
 
@@ -72,11 +74,17 @@ def auth_handler():
 def message_handler():
     messages = r.user_messages()
     for msg in messages:
-        logging.debug("Server Says: %s", msg)
+        msg = msg.replace("\r\n", " ")
+        logging.info("Server Says: %s", msg)
 
 
 def expiration_handler():
     logging.info("Password Timeout")
+
+
+def balance_handler():
+    balance = r.user_balance()
+    logging.info("Balance: %s", balance)
 
 
 def bug_handler():
