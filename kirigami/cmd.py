@@ -58,7 +58,8 @@ def controller(event):
     return {
         'AuthenticationRequested': auth_handler,
         'UserMessages': message_handler,
-        'AuthenticationExpired': expiration_handler
+        'AuthenticationExpired': expiration_handler,
+        'BalanceUpdate': balance_handler
     }.get(event, bug_handler)
 
 
@@ -78,6 +79,11 @@ def message_handler():
 
 def expiration_handler():
     logging.info("Password Timeout")
+
+
+def balance_handler():
+    balance = r.user_balance()
+    logging.info("Balance: %s", balance)
 
 
 def bug_handler():

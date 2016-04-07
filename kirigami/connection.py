@@ -72,3 +72,7 @@ class Remote(object):
     def user_messages(self):
         msg = self.__connection.client.getUserMessages(*self.__identity)
         return msg
+
+    def user_balance(self):
+        balance = self.__connection.client.getUserBalance(self.__user)
+        return balance
