@@ -74,7 +74,8 @@ def auth_handler():
 def message_handler():
     messages = r.user_messages()
     for msg in messages:
-        logging.debug("Server Says: %s", msg)
+        msg = msg.replace("\r\n", " ")
+        logging.info("Server Says: %s", msg)
 
 
 def expiration_handler():
