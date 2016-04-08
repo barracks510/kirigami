@@ -44,5 +44,9 @@ def identity():
 
 def retrieve_user():
     user = input("Username: ")
-    password = getpass.getpass()
-    return (user, password)
+    return user
+
+
+def retrieve_password():
+    passwd = getpass.getpass()
+    return passwd

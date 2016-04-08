@@ -19,7 +19,6 @@
 #
 
 import configparser
-import getpass
 
 
 def parse_config(location, logger):
@@ -34,7 +33,8 @@ def parse_config(location, logger):
         logger.critical("No MAIN section found in config. ")
     values = {}
 
-    values['user'] = main.get('user', getpass.getuser())
+    values['user'] = main.get('user', None)
+    values['password'] = main.get('password', None)
     values['hostname'] = main.get('hostname', 'print')
     values['proto'] = main.get('proto', 'http')
     values['port'] = main.get('port', '9191')

@@ -66,9 +66,16 @@ def controller(event):
 
 def auth_handler():
     ttl = int(settings.get('ttl', '60'))
-    user = kirigami.tagger.retrieve_user()
-    args = list(user)
-    args.append(ttl)
+
+    user = settings['main']['user']
+    if not user:
+        user = kirigami.tagger.retrieve_user()
+
+    passwd = settings['main']['password']
+    if not passwd:
+        passwd = kirigami.tagger.retrieve_password()
+
+    args = (user, passwd, ttl)
     r.auth_user(args)
 
 
