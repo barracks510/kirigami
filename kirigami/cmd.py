@@ -55,12 +55,13 @@ def main():
 
 
 def controller(event):
-    return {
+    events = {
         'AuthenticationRequested': auth_handler,
         'UserMessages': message_handler,
         'AuthenticationExpired': expiration_handler,
         'BalanceUpdate': balance_handler
-    }.get(event, bug_handler)
+    }
+    return events.get(event, bug_handler)
 
 
 def auth_handler():
