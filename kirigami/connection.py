@@ -74,5 +74,7 @@ class Remote(object):
         return msg
 
     def user_balance(self):
-        balance = self.__connection.client.getUserBalance(self.__user)
+        args = list(self.__identity)
+        args.append(self.__user)
+        balance = self.__connection.client.getUserBalance(*args)
         return balance

@@ -85,7 +85,7 @@ def expiration_handler():
 
 def balance_handler():
     balance = r.user_balance()
-    logging.info("Balance: %s", balance)
+    logging.info("Balance Updated: %s", balance)
 
 
 def bug_handler():
