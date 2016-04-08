@@ -4,7 +4,7 @@ PRINTERNAME='PrintCentral'
 PRINTERMODEL='HP LaserJet 4200'
 PRINTERLOCATION='lpd://print/central'
 PRINTERDRIVER='gutenprint.5.2://hp-lj_4200/expert'
-LOCATION="Bard College at Simon\'s Rock"
+LOCATION="Bard College at Simon's Rock"
 
 if [[ $EUID -ne 0 ]]; then
 	echo "You must be root user to install a printer."
