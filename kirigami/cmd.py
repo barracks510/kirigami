@@ -24,26 +24,12 @@ import sys
 
 import kirigami.tagger
 import kirigami.settings
-from kirigami.connection import Remote
+from .handlers import *
+from .connection import Remote
 
 
-log = {
-    'format': '%(asctime)s - %(levelname)s %(message)s',
-    'level': logging.DEBUG
-}
-logging.basicConfig(**log)
 
-logging.info("Parsing Configuration from .kirigami.conf")
-settings = kirigami.settings.parse_config('.kirigami.conf', logging)
-
-identity = kirigami.tagger.identity()
-logging.debug("Identity tagged as %s", identity)
-
-r = Remote(settings['main'], identity)
-
-
-#@asyncio.coroutine
-def main():
+def main(r, settings):
     while True:
         logging.debug("Getting Actions from Remote.")
         actions = r.pending_actions()
@@ -51,7 +37,7 @@ def main():
         if actions:
             for action in actions:
                 logging.debug("Recieved Action %s", action)
-                controller(action)()
+                controller(action)(r, settings, logging)
 
 
 def controller(event):
@@ -63,48 +49,22 @@ def controller(event):
     }
     return events.get(event, bug_handler)
 
-
-def auth_handler():
-    ttl = int(settings.get('ttl', '60'))
-
-    user = settings['main']['user']
-    if not user:
-        user = kirigami.tagger.retrieve_user()
-
-    passwd = settings['main']['password']
-    if not passwd:
-        passwd = kirigami.tagger.retrieve_password()
-
-    args = (user, passwd, ttl)
-    r.auth_user(args)
-
-
-def message_handler():
-    messages = r.user_messages()
-    for msg in messages:
-        msg = msg.replace("\r\n", " ")
-        logging.info("Server Says: %s", msg)
-
-
-def expiration_handler():
-    logging.info("Password Timeout")
-
-
-def balance_handler():
-    balance = r.user_balance()
-    logging.info("Balance Updated: %s", balance)
-
-
-def bug_handler():
-    logging.critical("Received a message not implemented.")
-
-
 def cli():
-    #loop = asyncio.get_event_loop()
+    log = {
+        'format': '%(asctime)s - %(levelname)s %(message)s',
+        'level': logging.DEBUG
+    }
+    logging.basicConfig(**log)
+
+    logging.info("Parsing Configuration from .kirigami.conf")
+    settings = kirigami.settings.parse_config('.kirigami.conf', logging)
+
+    identity = kirigami.tagger.identity()
+    logging.debug("Identity tagged as %s", identity)
+
+    r = Remote(settings['main'], identity)
+
     try:
-        #    loop.run_forever()
-        main()
+        main(r, settings)
     except KeyboardInterrupt:
         print("Exiting...")
-    #    loop.stop()
-    # loop.close()
