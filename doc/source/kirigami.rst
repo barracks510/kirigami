@@ -20,6 +20,22 @@ kirigami.connection module
     :undoc-members:
     :show-inheritance:
 
+kirigami.handlers module
+------------------------
+
+.. automodule:: kirigami.handlers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+kirigami.settings module
+------------------------
+
+.. automodule:: kirigami.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 kirigami.tagger module
 ----------------------
 
