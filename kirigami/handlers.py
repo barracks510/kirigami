@@ -21,6 +21,7 @@
 import kirigami.tagger
 import kirigami.settings
 
+
 def auth_handler(r, settings, logging):
     ttl = int(settings.get('ttl', '60'))
 
@@ -39,18 +40,18 @@ def auth_handler(r, settings, logging):
 def message_handler(r, settings, logging):
     messages = r.user_messages()
     for msg in messages:
-        msg = msg.replace("\r\n", " ")
-        logging.info("Server Says: %s", msg)
+        msg = msg.replace('\r\n', ' ')
+        logging.info('Server Says: %s', msg)
 
 
 def expiration_handler(r, settings, logging):
-    logging.info("Password Timeout")
+    logging.info('Password Timeout')
 
 
 def balance_handler(r, settings, logging):
     balance = r.user_balance()
-    logging.info("Balance Updated: %s", balance)
+    logging.info('Balance Updated: %s', balance)
 
 
 def bug_handler(r, settings, logging):
-    logging.critical("Received a message not implemented.")
+    logging.critical('Received a message not implemented.')

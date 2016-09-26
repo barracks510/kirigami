@@ -43,7 +43,7 @@ def identity():
 
 
 def retrieve_user():
-    user = input("Username: ")
+    user = input('Username: ')
     return user
 
 

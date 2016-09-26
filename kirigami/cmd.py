@@ -28,15 +28,14 @@ from .handlers import *
 from .connection import Remote
 
 
-
 def main(r, settings):
     while True:
-        logging.debug("Getting Actions from Remote.")
+        logging.debug('Getting Actions from Remote.')
         actions = r.pending_actions()
 
         if actions:
             for action in actions:
-                logging.debug("Recieved Action %s", action)
+                logging.debug('Recieved Action %s', action)
                 controller(action)(r, settings, logging)
 
 
@@ -49,6 +48,7 @@ def controller(event):
     }
     return events.get(event, bug_handler)
 
+
 def cli():
     log = {
         'format': '%(asctime)s - %(levelname)s %(message)s',
@@ -56,15 +56,15 @@ def cli():
     }
     logging.basicConfig(**log)
 
-    logging.info("Parsing Configuration from .kirigami.conf")
+    logging.info('Parsing Configuration from .kirigami.conf')
     settings = kirigami.settings.parse_config('.kirigami.conf', logging)
 
     identity = kirigami.tagger.identity()
-    logging.debug("Identity tagged as %s", identity)
+    logging.debug('Identity tagged as %s', identity)
 
     r = Remote(settings['main'], identity)
 
     try:
         main(r, settings)
     except KeyboardInterrupt:
-        print("Exiting...")
+        print('Exiting...')

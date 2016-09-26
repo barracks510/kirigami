@@ -33,7 +33,7 @@ def parse_config(location, logger):
             write_config(logger)
             config.read(location)
         except BaseException:
-            logger.critical("Could not write config. ")
+            logger.critical('Could not write config. ')
             exit(1)
 
     main = config['MAIN']
@@ -66,4 +66,4 @@ def write_config(logger):
     with open('.kirigami.conf', 'w') as configfile:
         config.write(configfile)
 
-    logger.debug("Config written. ")
+    logger.debug('Config written. ')
