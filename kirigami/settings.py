@@ -30,7 +30,7 @@ def parse_config(location, logger):
 
     if not config.has_section('MAIN'):
         try:
-            write_config(logger)
+            write_config(logger, location)
             config.read(location)
         except BaseException:
             logger.critical('Could not write config. ')
@@ -51,19 +51,19 @@ def parse_config(location, logger):
     return settings
 
 
-def write_config(logger):
+def write_config(logger, location):
     config = configparser.RawConfigParser()
 
     username = kirigami.tagger.retrieve_user()
 
     config.add_section('MAIN')
     config.set('MAIN', 'user', username)
-    config.set('MAIN', 'hostname', 'gutenberg.simons-rock.edu')
+    config.set('MAIN', 'hostname', 'print')
     config.set('MAIN', 'proto', 'http')
     config.set('MAIN', 'port', '9191')
     config.set('MAIN', 'ttl', '60')
 
-    with open('.kirigami.conf', 'w') as configfile:
+    with open(location, 'w') as configfile:
         config.write(configfile)
 
     logger.debug('Config written. ')

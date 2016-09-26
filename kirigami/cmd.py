@@ -18,9 +18,9 @@
 # along with Kirigami.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import asyncio
 import logging
 import sys
+import os.path
 
 import kirigami.tagger
 import kirigami.settings
@@ -56,8 +56,9 @@ def cli():
     }
     logging.basicConfig(**log)
 
-    logging.info('Parsing Configuration from .kirigami.conf')
-    settings = kirigami.settings.parse_config('.kirigami.conf', logging)
+    logging.info('Parsing Configuration from ~/.kirigami.conf')
+    settings = kirigami.settings.parse_config(
+        os.path.expanduser('~/.kirigami.conf'), logging)
 
     identity = kirigami.tagger.identity()
     logging.debug('Identity tagged as %s', identity)
