@@ -19,6 +19,7 @@
 #
 
 import configparser
+import kirigami.tagger
 
 
 def parse_config(location, logger):
@@ -27,10 +28,16 @@ def parse_config(location, logger):
     config = configparser.ConfigParser()
     config.read(location)
 
-    try:
-        main = config['MAIN']
-    except KeyError:
-        logger.critical("No MAIN section found in config. ")
+    if not config.has_section('MAIN'):
+        try:
+            write_config(logger)
+            config.read(location)
+        except BaseException:
+            logger.critical("Could not write config. ")
+            exit(1)
+
+    main = config['MAIN']
+
     values = {}
 
     values['user'] = main.get('user', None)
@@ -44,10 +51,10 @@ def parse_config(location, logger):
     return settings
 
 
-def write_config():
+def write_config(logger):
     config = configparser.RawConfigParser()
 
-    username = getpass.getuser()
+    username = kirigami.tagger.retrieve_user()
 
     config.add_section('MAIN')
     config.set('MAIN', 'user', username)
@@ -58,3 +65,5 @@ def write_config():
 
     with open('.kirigami.conf', 'w') as configfile:
         config.write(configfile)
+
+    logger.debug("Config written. ")
