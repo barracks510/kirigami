@@ -18,7 +18,7 @@
 # along with Kirigami.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import xmlrpc.client
+from .timeout import ServerProxy
 
 
 class Remote(object):
@@ -51,7 +51,7 @@ class Remote(object):
 
         args = (self.__proto, self.__hostname, self.__port)
         target = '{}://{}:{}/rpc/clients/xmlrpc'.format(*args)
-        self.__connection = xmlrpc.client.ServerProxy(target)
+        self.__connection = ServerProxy(target)
 
         self.__user = settings['user']
         self.__identity = identity

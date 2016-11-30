@@ -19,8 +19,9 @@
 #
 
 import logging
-import sys
 import os.path
+import socket
+import sys
 
 import kirigami.tagger
 import kirigami.settings
@@ -31,12 +32,19 @@ from .connection import Remote
 def main(r, settings):
     while True:
         logging.debug('Getting Actions from Remote.')
-        actions = r.pending_actions()
+        try:
+            actions = r.pending_actions()
+        except socket.timeout as e:
+            logging.warn('Connection timed out.')
+            actions = None
 
         if actions:
             for action in actions:
                 logging.debug('Recieved Action %s', action)
-                controller(action)(r, settings, logging)
+                try:
+                    controller(action)(r, settings, logging)
+                except socket.timeout as e:
+                    logging.warn('Connection timed out.')
 
 
 def controller(event):
